@@ -23,6 +23,7 @@ THE SOFTWARE.
 // Generated with FontGenerator (%STAPPLER_ROOT%/test/generators/FontGenerator)
 
 #include "XLDefine.h"
+#include "XLFontLibrary.h"
 
 namespace stappler::xenolith::resources::fonts {
 
@@ -100,5 +101,7 @@ enum class FontName {
 
 BytesView getFont(FontName);
 StringView getFontName(FontName);
+
+void addFonts(font::FontController::Builder &);
 
 }

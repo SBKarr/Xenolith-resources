@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "XLDefine.h"
 #include "XLResourceFontSource.h"
+#include "XLFontLibrary.h"
 
 #include "XLResourceFont-OpenSans-Bold.cc"
 #include "XLResourceFont-OpenSans-BoldItalic.cc"
@@ -246,6 +247,167 @@ StringView getFontName(FontName name) {
 	}
 
 	return StringView();
+}
+
+static Bytes openResourceFont(resources::fonts::FontName name) {
+	auto d = resources::fonts::getFont(name);
+	return data::decompress<memory::StandartInterface>(d.data(), d.size());
+}
+
+static String getResourceFontName(resources::fonts::FontName name) {
+	return toString("resource:", resources::fonts::getFontName(name));
+}
+
+static const font::FontController::FontSource * makeResourceFontQuery(
+		font::FontController::Builder &b, resources::fonts::FontName name) {
+	if (auto v = b.getFontSource(getResourceFontName(name))) {
+		return v;
+	}
+	return b.addFontSource(getResourceFontName(name), [name] { return openResourceFont(name); });
+}
+
+void addFonts(font::FontController::Builder &b) {
+	using FontStyle = font::FontStyle;
+	using FontWeight = font::FontWeight;
+	using FontStretch = font::FontStretch;
+
+	auto res_OpenSans_Bold = makeResourceFontQuery(b, FontName::OpenSans_Bold);
+	auto res_OpenSans_BoldItalic = makeResourceFontQuery(b, FontName::OpenSans_BoldItalic);
+	auto res_OpenSans_ExtraBold = makeResourceFontQuery(b, FontName::OpenSans_ExtraBold);
+	auto res_OpenSans_ExtraBoldItalic = makeResourceFontQuery(b, FontName::OpenSans_ExtraBoldItalic);
+	auto res_OpenSans_Italic = makeResourceFontQuery(b, FontName::OpenSans_Italic);
+	auto res_OpenSans_Light = makeResourceFontQuery(b, FontName::OpenSans_Light);
+	auto res_OpenSans_LightItalic = makeResourceFontQuery(b, FontName::OpenSans_LightItalic);
+	auto res_OpenSans_Medium = makeResourceFontQuery(b, FontName::OpenSans_Medium);
+	auto res_OpenSans_MediumItalic = makeResourceFontQuery(b, FontName::OpenSans_MediumItalic);
+	auto res_OpenSans_Regular = makeResourceFontQuery(b, FontName::OpenSans_Regular);
+	auto res_OpenSans_SemiBold = makeResourceFontQuery(b, FontName::OpenSans_SemiBold);
+	auto res_OpenSans_SemiBoldItalic = makeResourceFontQuery(b, FontName::OpenSans_SemiBoldItalic);
+	auto res_OpenSans_Condensed_Bold = makeResourceFontQuery(b, FontName::OpenSans_Condensed_Bold);
+	auto res_OpenSans_Condensed_BoldItalic = makeResourceFontQuery(b, FontName::OpenSans_Condensed_BoldItalic);
+	auto res_OpenSans_Condensed_ExtraBold = makeResourceFontQuery(b, FontName::OpenSans_Condensed_ExtraBold);
+	auto res_OpenSans_Condensed_ExtraBoldItalic = makeResourceFontQuery(b, FontName::OpenSans_Condensed_ExtraBoldItalic);
+	auto res_OpenSans_Condensed_Italic = makeResourceFontQuery(b, FontName::OpenSans_Condensed_Italic);
+	auto res_OpenSans_Condensed_Light = makeResourceFontQuery(b, FontName::OpenSans_Condensed_Light);
+	auto res_OpenSans_Condensed_LightItalic = makeResourceFontQuery(b, FontName::OpenSans_Condensed_LightItalic);
+	auto res_OpenSans_Condensed_Medium = makeResourceFontQuery(b, FontName::OpenSans_Condensed_Medium);
+	auto res_OpenSans_Condensed_MediumItalic = makeResourceFontQuery(b, FontName::OpenSans_Condensed_MediumItalic);
+	auto res_OpenSans_Condensed_Regular = makeResourceFontQuery(b, FontName::OpenSans_Condensed_Regular);
+	auto res_OpenSans_Condensed_SemiBold = makeResourceFontQuery(b, FontName::OpenSans_Condensed_SemiBold);
+	auto res_OpenSans_Condensed_SemiBoldItalic = makeResourceFontQuery(b, FontName::OpenSans_Condensed_SemiBoldItalic);
+	auto res_OpenSans_SemiCondensed_Bold = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_Bold);
+	auto res_OpenSans_SemiCondensed_BoldItalic = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_BoldItalic);
+	auto res_OpenSans_SemiCondensed_ExtraBold = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_ExtraBold);
+	auto res_OpenSans_SemiCondensed_ExtraBoldItalic = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_ExtraBoldItalic);
+	auto res_OpenSans_SemiCondensed_Italic = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_Italic);
+	auto res_OpenSans_SemiCondensed_Light = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_Light);
+	auto res_OpenSans_SemiCondensed_LightItalic = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_LightItalic);
+	auto res_OpenSans_SemiCondensed_Medium = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_Medium);
+	auto res_OpenSans_SemiCondensed_MediumItalic = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_MediumItalic);
+	auto res_OpenSans_SemiCondensed_Regular = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_Regular);
+	auto res_OpenSans_SemiCondensed_SemiBold = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_SemiBold);
+	auto res_OpenSans_SemiCondensed_SemiBoldItalic = makeResourceFontQuery(b, FontName::OpenSans_SemiCondensed_SemiBoldItalic);
+	auto res_Roboto_Black = makeResourceFontQuery(b, FontName::Roboto_Black);
+	auto res_Roboto_BlackItalic = makeResourceFontQuery(b, FontName::Roboto_BlackItalic);
+	auto res_Roboto_Bold = makeResourceFontQuery(b, FontName::Roboto_Bold);
+	auto res_Roboto_BoldItalic = makeResourceFontQuery(b, FontName::Roboto_BoldItalic);
+	auto res_Roboto_Italic = makeResourceFontQuery(b, FontName::Roboto_Italic);
+	auto res_Roboto_Light = makeResourceFontQuery(b, FontName::Roboto_Light);
+	auto res_Roboto_LightItalic = makeResourceFontQuery(b, FontName::Roboto_LightItalic);
+	auto res_Roboto_Medium = makeResourceFontQuery(b, FontName::Roboto_Medium);
+	auto res_Roboto_MediumItalic = makeResourceFontQuery(b, FontName::Roboto_MediumItalic);
+	auto res_Roboto_Regular = makeResourceFontQuery(b, FontName::Roboto_Regular);
+	auto res_Roboto_Thin = makeResourceFontQuery(b, FontName::Roboto_Thin);
+	auto res_Roboto_ThinItalic = makeResourceFontQuery(b, FontName::Roboto_ThinItalic);
+	auto res_RobotoCondensed_Bold = makeResourceFontQuery(b, FontName::RobotoCondensed_Bold);
+	auto res_RobotoCondensed_BoldItalic = makeResourceFontQuery(b, FontName::RobotoCondensed_BoldItalic);
+	auto res_RobotoCondensed_Italic = makeResourceFontQuery(b, FontName::RobotoCondensed_Italic);
+	auto res_RobotoCondensed_Light = makeResourceFontQuery(b, FontName::RobotoCondensed_Light);
+	auto res_RobotoCondensed_LightItalic = makeResourceFontQuery(b, FontName::RobotoCondensed_LightItalic);
+	auto res_RobotoCondensed_Regular = makeResourceFontQuery(b, FontName::RobotoCondensed_Regular);
+	auto res_RobotoMono_Bold = makeResourceFontQuery(b, FontName::RobotoMono_Bold);
+	auto res_RobotoMono_BoldItalic = makeResourceFontQuery(b, FontName::RobotoMono_BoldItalic);
+	auto res_RobotoMono_ExtraLight = makeResourceFontQuery(b, FontName::RobotoMono_ExtraLight);
+	auto res_RobotoMono_ExtraLightItalic = makeResourceFontQuery(b, FontName::RobotoMono_ExtraLightItalic);
+	auto res_RobotoMono_Italic = makeResourceFontQuery(b, FontName::RobotoMono_Italic);
+	auto res_RobotoMono_Light = makeResourceFontQuery(b, FontName::RobotoMono_Light);
+	auto res_RobotoMono_LightItalic = makeResourceFontQuery(b, FontName::RobotoMono_LightItalic);
+	auto res_RobotoMono_Medium = makeResourceFontQuery(b, FontName::RobotoMono_Medium);
+	auto res_RobotoMono_MediumItalic = makeResourceFontQuery(b, FontName::RobotoMono_MediumItalic);
+	auto res_RobotoMono_Regular = makeResourceFontQuery(b, FontName::RobotoMono_Regular);
+	auto res_RobotoMono_SemiBold = makeResourceFontQuery(b, FontName::RobotoMono_SemiBold);
+	auto res_RobotoMono_SemiBoldItalic = makeResourceFontQuery(b, FontName::RobotoMono_SemiBoldItalic);
+	auto res_RobotoMono_Thin = makeResourceFontQuery(b, FontName::RobotoMono_Thin);
+	auto res_RobotoMono_ThinItalic = makeResourceFontQuery(b, FontName::RobotoMono_ThinItalic);
+
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Bold, FontStretch::Normal, res_OpenSans_Bold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Bold, FontStretch::Normal, res_OpenSans_BoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::ExtraBold, FontStretch::Normal, res_OpenSans_ExtraBold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::ExtraBold, FontStretch::Normal, res_OpenSans_ExtraBoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Normal, FontStretch::Normal, res_OpenSans_Italic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Light, FontStretch::Normal, res_OpenSans_Light);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Light, FontStretch::Normal, res_OpenSans_LightItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Medium, FontStretch::Normal, res_OpenSans_Medium);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Medium, FontStretch::Normal, res_OpenSans_MediumItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Normal, FontStretch::Normal, res_OpenSans_Regular);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::SemiBold, FontStretch::Normal, res_OpenSans_SemiBold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::SemiBold, FontStretch::Normal, res_OpenSans_SemiBoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Bold, FontStretch::Condensed, res_OpenSans_Condensed_Bold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Bold, FontStretch::Condensed, res_OpenSans_Condensed_BoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::ExtraBold, FontStretch::Condensed, res_OpenSans_Condensed_ExtraBold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::ExtraBold, FontStretch::Condensed, res_OpenSans_Condensed_ExtraBoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Normal, FontStretch::Condensed, res_OpenSans_Condensed_Italic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Light, FontStretch::Condensed, res_OpenSans_Condensed_Light);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Light, FontStretch::Condensed, res_OpenSans_Condensed_LightItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Medium, FontStretch::Condensed, res_OpenSans_Condensed_Medium);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Medium, FontStretch::Condensed, res_OpenSans_Condensed_MediumItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Normal, FontStretch::Condensed, res_OpenSans_Condensed_Regular);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::SemiBold, FontStretch::Condensed, res_OpenSans_Condensed_SemiBold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::SemiBold, FontStretch::Condensed, res_OpenSans_Condensed_SemiBoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Bold, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_Bold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Bold, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_BoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::ExtraBold, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_ExtraBold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::ExtraBold, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_ExtraBoldItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Normal, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_Italic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Light, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_Light);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Light, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_LightItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Medium, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_Medium);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::Medium, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_MediumItalic);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::Normal, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_Regular);
+	b.addFontFaceQuery("OpenSans", FontStyle::Normal, FontWeight::SemiBold, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_SemiBold);
+	b.addFontFaceQuery("OpenSans", FontStyle::Italic, FontWeight::SemiBold, FontStretch::SemiCondensed, res_OpenSans_SemiCondensed_SemiBoldItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Black, FontStretch::Normal, res_Roboto_Black);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Black, FontStretch::Normal, res_Roboto_BlackItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Bold, FontStretch::Normal, res_Roboto_Bold);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Bold, FontStretch::Normal, res_Roboto_BoldItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Normal, FontStretch::Normal, res_Roboto_Italic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Light, FontStretch::Normal, res_Roboto_Light);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Light, FontStretch::Normal, res_Roboto_LightItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Medium, FontStretch::Normal, res_Roboto_Medium);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Medium, FontStretch::Normal, res_Roboto_MediumItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Normal, FontStretch::Normal, res_Roboto_Regular);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Thin, FontStretch::Normal, res_Roboto_Thin);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Thin, FontStretch::Normal, res_Roboto_ThinItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Bold, FontStretch::Condensed, res_RobotoCondensed_Bold);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Bold, FontStretch::Condensed, res_RobotoCondensed_BoldItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Normal, FontStretch::Condensed, res_RobotoCondensed_Italic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Light, FontStretch::Condensed, res_RobotoCondensed_Light);
+	b.addFontFaceQuery("Roboto", FontStyle::Italic, FontWeight::Light, FontStretch::Condensed, res_RobotoCondensed_LightItalic);
+	b.addFontFaceQuery("Roboto", FontStyle::Normal, FontWeight::Normal, FontStretch::Condensed, res_RobotoCondensed_Regular);
+	b.addFontFaceQuery("monospace", FontStyle::Normal, FontWeight::Bold, FontStretch::Normal, res_RobotoMono_Bold);
+	b.addFontFaceQuery("monospace", FontStyle::Italic, FontWeight::Bold, FontStretch::Normal, res_RobotoMono_BoldItalic);
+	b.addFontFaceQuery("monospace", FontStyle::Normal, FontWeight::ExtraLight, FontStretch::Normal, res_RobotoMono_ExtraLight);
+	b.addFontFaceQuery("monospace", FontStyle::Italic, FontWeight::ExtraLight, FontStretch::Normal, res_RobotoMono_ExtraLightItalic);
+	b.addFontFaceQuery("monospace", FontStyle::Italic, FontWeight::Normal, FontStretch::Normal, res_RobotoMono_Italic);
+	b.addFontFaceQuery("monospace", FontStyle::Normal, FontWeight::Medium, FontStretch::Normal, res_RobotoMono_Medium);
+	b.addFontFaceQuery("monospace", FontStyle::Italic, FontWeight::Medium, FontStretch::Normal, res_RobotoMono_MediumItalic);
+	b.addFontFaceQuery("monospace", FontStyle::Normal, FontWeight::Light, FontStretch::Normal, res_RobotoMono_Light);
+	b.addFontFaceQuery("monospace", FontStyle::Italic, FontWeight::Light, FontStretch::Normal, res_RobotoMono_LightItalic);
+	b.addFontFaceQuery("monospace", FontStyle::Normal, FontWeight::Normal, FontStretch::Normal, res_RobotoMono_Regular);
+	b.addFontFaceQuery("monospace", FontStyle::Normal, FontWeight::SemiBold, FontStretch::Normal, res_RobotoMono_SemiBold);
+	b.addFontFaceQuery("monospace", FontStyle::Italic, FontWeight::SemiBold, FontStretch::Normal, res_RobotoMono_SemiBoldItalic);
+	b.addFontFaceQuery("monospace", FontStyle::Normal, FontWeight::Thin, FontStretch::Normal, res_RobotoMono_Thin);
+	b.addFontFaceQuery("monospace", FontStyle::Italic, FontWeight::Thin, FontStretch::Normal, res_RobotoMono_ThinItalic);
 }
 
 }
